@@ -22,9 +22,9 @@ namespace Blog.WebApi.Controllers
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(200)]
-        //public ActionResult<IEnumerable<Blog>> Get(bool includePosts = true)
         public ActionResult<IEnumerable<Blog>> Get(bool includePosts = true)
         {
+            TestDB();
             IEnumerable<Blog> result;
             var query = db.Blogs;
             if (includePosts)
@@ -39,6 +39,7 @@ namespace Blog.WebApi.Controllers
         [ProducesResponseType(200)]
         public ActionResult<Blog> Get(int id, bool includePosts = true)
         {
+            TestDB();
             Blog result;
             IEnumerable<Blog> query;
             if (includePosts)
@@ -59,6 +60,7 @@ namespace Blog.WebApi.Controllers
         [ProducesResponseType(200)]
         public ActionResult Post([FromBody] Blog value)
         {
+            TestDB();
             var newEntry = new Blog
             {
                 Rating = value.Rating,
@@ -75,6 +77,7 @@ namespace Blog.WebApi.Controllers
         [ProducesResponseType(200)]
         public ActionResult Put(int id, [FromBody] Blog value)
         {
+            TestDB();
             var existingBlogEntry = db.Blogs.Include(blog => blog.Posts).FirstOrDefault(b => b.BlogId == value.BlogId);
             if (existingBlogEntry == null)
             {
@@ -104,6 +107,7 @@ namespace Blog.WebApi.Controllers
         [ProducesResponseType(200)]
         public ActionResult Delete(int id)
         {
+            TestDB();
             var existingBlogEntry = db.Blogs.FirstOrDefault(b => b.BlogId == id);
             if (existingBlogEntry == null)
             {
@@ -114,5 +118,7 @@ namespace Blog.WebApi.Controllers
             return Ok($"Blog with id of {id} was deleted.");
         }
 
+        private void TestDB() =>
+            db.Blogs.Count();
     }
 }

@@ -8,6 +8,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Reflection;
+using RK.HotRS.ToolsCore.Middleware.GlobalErrorHandler;
+using System.Net;
 
 namespace Blog.WebApi
 {
@@ -47,7 +49,11 @@ namespace Blog.WebApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseGlobalExceptionMiddleware(options =>
+            {
+                options.StatusCode = HttpStatusCode.BadRequest;
+                options.FullDetail = true;
+            });
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
