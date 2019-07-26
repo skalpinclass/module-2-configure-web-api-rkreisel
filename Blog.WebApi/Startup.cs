@@ -52,7 +52,8 @@ namespace Blog.WebApi
             app.UseGlobalExceptionMiddleware(options =>
             {
                 options.StatusCode = HttpStatusCode.BadRequest;
-                options.FullDetail = true;
+                //options.FullDetail = true;
+                options.IncludeSource = true;
             });
             app.UseSwagger();
             app.UseSwaggerUI(c =>
