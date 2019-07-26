@@ -54,6 +54,7 @@ namespace Blog.WebApi
                 options.StatusCode = HttpStatusCode.BadRequest;
                 //options.FullDetail = true;
                 options.IncludeSource = true;
+                options.IncludeData = true;
             });
             app.UseSwagger();
             app.UseSwaggerUI(c =>
